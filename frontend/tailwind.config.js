@@ -52,7 +52,17 @@ export default {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
-  			}
+  			},
+
+			  dark: {
+				// Définissez ici vos couleurs pour le dark mode
+				background: 'rgb(31 41 55)', // bg-gray-800
+				foreground: 'rgb(243 244 246)', // text-gray-100
+				card: 'rgb(31 41 55)', // bg-gray-800
+				border: 'rgb(55 65 81)', // border-gray-700
+				input: 'rgb(55 65 81)', // input-gray-700
+				// etc...
+			  }
   		}
   	}
   },

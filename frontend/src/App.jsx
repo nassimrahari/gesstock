@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense,useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext'; // Importer le contexte
 import { AuthProvider } from './contexts/AuthContext';
@@ -87,11 +87,20 @@ const AppContent = () => {
     
     const location = useLocation(); // Obtenir l'emplacement actuel
 
+    useEffect(() => {
+        // Appliquer ou retirer la classe au document
+        if (darkMode) {
+            document.body.classList.add('dark');
+        } else {
+            document.body.classList.remove('dark');
+        }
+    }, [darkMode]); // Effectuer l'effet chaque fois que darkMode change
+
     const isLoginPage = location.pathname === '/login';
     const isEmptyPage = ['/login', '/register', '/password/reset','/reset-password'].includes(location.pathname);
 
     return (
-        <div className={darkMode?'dark':''}>
+        <div>
         <SidebarProvider>
       {!isEmptyPage && <AppSidebar />}
       <MainContent/>

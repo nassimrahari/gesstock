@@ -227,7 +227,7 @@ const PurchaseCreateComponent = () => {
                     <DialogTitle className="text-xl font-bold">Ajout Achat</DialogTitle>
                 </DialogHeader>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4 bg-background">
                     {/* Left column - Products catalog */}
                     <div className="space-y-4">
                         <div className="flex space-x-2">
@@ -243,8 +243,8 @@ const PurchaseCreateComponent = () => {
                             </div>
                         </div>
 
-                        <div className="bg-gray-50 rounded-md p-2 flex-grow overflow-y-auto" style={{ maxHeight: "350px" }}>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div className="bg-background rounded-md p-2 flex-grow overflow-y-auto" style={{ maxHeight: "350px" }}>
+                            <div className="bg-background grid grid-cols-1 md:grid-cols-2 gap-3">
                                 {filteredProducts.map((product) => (
                                     <Card key={product.value} className="overflow-hidden hover:shadow-md transition-shadow">
                                         <CardContent className="p-3">
@@ -270,7 +270,7 @@ const PurchaseCreateComponent = () => {
                     </div>
 
                     {/* Right column - Purchase form */}
-                    <div className="bg-white rounded-lg border border-gray-200 p-4 space-y-4">
+                    <div className="bg-background rounded-lg border border-gray-200 p-4 space-y-4">
                         {/* Form header with errors */}
                         {error?.all && (
                             <div className="bg-red-50 p-3 rounded border-l-4 border-red-500">
@@ -334,7 +334,7 @@ const PurchaseCreateComponent = () => {
                                 ) : (
                                     <div className="space-y-3">
                                         {purchaseLines.map(purchaseLine => (
-                                            <div key={purchaseLine.uuid} className="bg-gray-50 rounded-md p-3 relative">
+                                            <div key={purchaseLine.uuid} className="bg-background rounded-md p-3 relative">
                                                 <div className="space-y-2">
                                                     <div className="flex items-center justify-between">
                                                         <Button 
@@ -360,7 +360,7 @@ const PurchaseCreateComponent = () => {
                                                             );
                                                             setPurchaseLines(updatedPurchaseLines);
                                                         }}
-                                                        placeholder="Sélectionner un produit"
+                                                        placeholder="Sélectionner.."
                                                         className="mb-2"
                                                     />
                                                     </div>

@@ -31,48 +31,65 @@ export function SelectSimple({ options, value, onChange, placeholder = "Select a
   const selectedLabel = options.find(option => option.value === value)?.label;
   
   return (
-    <div className="select-container" ref={wrapperRef} style={styles.container}>
+    <div className="relative w-full" ref={wrapperRef}>
       <button 
         type="button"
         onClick={() => setOpen(!open)} 
-        style={{
-          ...styles.button,
-          ...(open ? styles.buttonActive : {})
-        }}
+        className={`
+          flex justify-between items-center w-full p-2 text-sm text-left cursor-pointer
+          bg-white dark:bg-background border border-gray-200 dark:border-gray-700 rounded-md
+          ${open ? "ring-1 ring-blue-500 border-blue-500" : ""}
+          hover:border-gray-300 dark:hover:border-gray-600
+        `}
       >
-        <span>{value ? selectedLabel : placeholder}</span>
-        <ChevronsUpDown size={16} style={styles.chevron} />
+        <span className={value ? "text-gray-900 dark:text-white" : "text-gray-500 dark:text-gray-400"}>
+          {value ? selectedLabel : placeholder}
+        </span>
+        <ChevronsUpDown size={16} className="opacity-50" />
       </button>
       
       {open && (
-        <div style={styles.dropdown}>
-          <div style={styles.searchContainer}>
+        <div className="
+          absolute top-full mt-1 left-0 w-full z-10
+          bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-700 rounded-md
+          shadow-lg max-h-[300px] flex flex-col
+        ">
+          <div className="p-2 border-b border-gray-200 dark:border-gray-700">
             <input
               type="text"
               placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={styles.input}
+              className="
+                w-full px-2 py-1.5 text-sm
+                bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded
+                focus:outline-none focus:ring-1 focus:ring-blue-500
+                text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400
+              "
               autoFocus
             />
           </div>
           
-          <div style={styles.optionsContainer}>
+          <div className="overflow-y-auto max-h-[250px]">
             {filteredOptions.length === 0 ? (
-              <div style={styles.empty}>No options found.</div>
+              <div className="p-3 text-sm text-center text-gray-500 dark:text-gray-400">
+                No options found.
+              </div>
             ) : (
               filteredOptions.map((option) => (
                 <div
                   key={option.value}
                   onClick={() => handleSelect(option.value)}
-                  style={{
-                    ...styles.option,
-                    ...(value === option.value ? styles.optionSelected : {})
-                  }}
+                  className={`
+                    flex justify-between items-center px-3 py-2 text-sm cursor-pointer
+                    ${value === option.value 
+                      ? "bg-gray-100 dark:bg-gray-600 text-gray-900 dark:text-white" 
+                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50"}
+                  `}
                 >
                   <span>{option.label}</span>
                   {value === option.value && (
-                    <Check size={16} style={styles.checkIcon} />
+                    <Check size={16} className="text-blue-500" />
                   )}
                 </div>
               ))
@@ -83,83 +100,5 @@ export function SelectSimple({ options, value, onChange, placeholder = "Select a
     </div>
   );
 }
-
-// Styles inline pour éviter les dépendances CSS
-const styles = {
-  container: {
-    position: 'relative',
-    width: '100%',
-  },
-  button: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-    padding: '8px 12px',
-    background: 'white',
-    border: '1px solid #e2e8f0',
-    borderRadius: '4px',
-    fontSize: '14px',
-    cursor: 'pointer',
-    textAlign: 'left',
-  },
-  buttonActive: {
-    borderColor: '#3b82f6',
-    boxShadow: '0 0 0 1px #3b82f6',
-  },
-  chevron: {
-    opacity: 0.5,
-  },
-  dropdown: {
-    position: 'absolute',
-    top: 'calc(100% + 5px)',
-    left: 0,
-    width: '100%',
-    backgroundColor: 'white',
-    border: '1px solid #e2e8f0',
-    borderRadius: '4px',
-    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-    zIndex: 10,
-    maxHeight: '300px',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  searchContainer: {
-    padding: '8px',
-    borderBottom: '1px solid #e2e8f0',
-  },
-  input: {
-    width: '100%',
-    padding: '6px 8px',
-    fontSize: '14px',
-    border: '1px solid #e2e8f0',
-    borderRadius: '4px',
-    outline: 'none',
-  },
-  optionsContainer: {
-    overflowY: 'auto',
-    maxHeight: '250px',
-  },
-  option: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '8px 12px',
-    cursor: 'pointer',
-    fontSize: '14px',
-  },
-  optionSelected: {
-    backgroundColor: '#f1f5f9',
-  },
-  empty: {
-    padding: '12px',
-    color: '#64748b',
-    fontSize: '14px',
-    textAlign: 'center',
-  },
-  checkIcon: {
-    color: '#3b82f6',
-  }
-};
 
 export default SelectSimple;
