@@ -1,4 +1,4 @@
-```markdown
+
 # Stock Management System (Gesstock)
 
 ## Overview
