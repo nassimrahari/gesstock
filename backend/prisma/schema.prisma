@@ -1,0 +1,94 @@
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                Int      @id @default(autoincrement())
+  username          String   @unique
+  email             String   @unique
+  password          String
+  resetToken        String?  // Optional field for password reset token
+  resetTokenExpiry  DateTime? // Optional field for token expiration
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+
+  
+}
+
+model Supplier {
+  id Int @id @default(autoincrement())
+  name String @unique 
+  contact_email String? @unique 
+  phone_number String? @unique 
+  purchases Purchase[] @relation
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String @unique 
+  description String?  
+  products Product[] @relation
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+  name String @unique 
+  price Decimal   
+  categoryId Int 
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  image String?  
+  purchaseLines PurchaseLine[] @relation
+  saleLines SaleLine[] @relation
+}
+
+model Purchase {
+  id Int @id @default(autoincrement())
+  purchase_date DateTime  
+  supplierId Int 
+  supplier Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  purchaseLines PurchaseLine[] @relation
+}
+
+model PurchaseLine {
+  id Int @id @default(autoincrement())
+  purchaseId Int 
+  purchase Purchase @relation(fields: [purchaseId], references: [id], onDelete: Cascade)
+  productId Int 
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity Int  
+  price Decimal   
+}
+
+model Client {
+  id Int @id @default(autoincrement())
+  name String @unique 
+  contact_email String? @unique 
+  phone_number String?  
+  sales Sale[] @relation
+}
+
+model Sale {
+  id Int @id @default(autoincrement())
+  sale_date DateTime  
+  clientId Int 
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  saleLines SaleLine[] @relation
+}
+
+model SaleLine {
+  id Int @id @default(autoincrement())
+  saleId Int 
+  sale Sale @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  productId Int 
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity Int  
+  price Decimal   
+}
+

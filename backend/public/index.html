@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Tester</title>
+    <style>
+        :root {
+            --bg-color: #f7fafc;
+            --text-color: #2d3748;
+            --primary-color: #3182ce;
+            --secondary-color: #4a5568;
+            --border-color: #e2e8f0;
+            --header-bg: #ffffff;
+            --aside-bg: #edf2f7;
+            --main-bg: #ffffff;
+            --footer-bg: #2d3748;
+        }
+
+        .dark-mode {
+            --bg-color: #1a202c;
+            --text-color: #e2e8f0;
+            --primary-color: #63b3ed;
+            --secondary-color: #a0aec0;
+            --border-color: #4a5568;
+            --header-bg: #2d3748;
+            --aside-bg: #2d3748;
+            --main-bg: #1a202c;
+            --footer-bg: #2d3748;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            display: grid;
+            grid-template-areas:
+                "header header"
+                "aside main"
+                "footer footer";
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: auto 1fr auto;
+            min-height: 100vh;
+        }
+
+        header {
+            grid-area: header;
+            background-color: var(--header-bg);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .dark-mode-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        aside {
+            grid-area: aside;
+            background-color: var(--aside-bg);
+            padding: 1rem;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .endpoint-list {
+            list-style-type: none;
+        }
+
+        .endpoint-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .endpoint-list a {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .endpoint-list a:hover {
+            color: var(--primary-color);
+        }
+
+        main {
+            grid-area: main;
+            background-color: var(--main-bg);
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        select, input, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .inline-form {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .inline-form select,
+        .inline-form input {
+            flex: 1;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .params-body {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+
+        }
+
+        .params-body > div {
+            flex: 1;
+            height:250px;
+        }
+
+        .params-body  textarea {
+            
+            height:250px !important;
+        }
+
+        #response-output {
+            background-color: var(--aside-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        footer {
+            grid-area: footer;
+            background-color: var(--footer-bg);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                grid-template-areas:
+                    "header"
+                    "aside"
+                    "main"
+                    "footer";
+                grid-template-columns: 1fr;
+            }
+
+            .inline-form,
+            .params-body {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Yoan Builder</div>
+        <button class="dark-mode-toggle" id="darkModeToggle">🌓</button>
+    </header>
+
+    <aside>
+        <h2>Endpoints</h2>
+        <ul class="endpoint-list">
+             <li><a class="end-point" href="#">/api/auth/register</a></li>
+               <li><a class="end-point" href="#">/api/auth/login</a></li>
+            <li><a class="end-point" href="#">/api/users</a></li>
+<li><a class="end-point" href="#">/api/counts</a></li>
+<li><a class="end-point" href="#">/api/suppliers</a></li>
+<li><a class="end-point" href="#">/api/categorys</a></li>
+<li><a class="end-point" href="#">/api/products</a></li>
+<li><a class="end-point" href="#">/api/purchases</a></li>
+<li><a class="end-point" href="#">/api/purchaselines</a></li>
+<li><a class="end-point" href="#">/api/clients</a></li>
+<li><a class="end-point" href="#">/api/sales</a></li>
+<li><a class="end-point" href="#">/api/salelines</a></li>
+
+        </ul>
+    </aside>
+
+    <main>
+        <div class="inline-form">
+            <select id="method">
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="PATCH">PATCH</option>
+                <option value="DELETE">DELETE</option>
+            </select>
+            <input type="text" id="endpoint" placeholder="Enter endpoint" />
+            <button id="send-btn">Send</button>
+        </div>
+
+        <div class="params-body">
+            <div class="form-group">
+                <label for="params">Query Parameters (JSON):</label>
+                <textarea id="params" placeholder='{"key": "value"}'></textarea>
+            </div>
+            <div class="form-group">
+                <label for="json-input">Request Body (JSON):</label>
+                <textarea id="json-input" placeholder='{"key": "value"}'></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="response-output">Response:</label>
+            <pre id="response-output"></pre>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Yoan Builder. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Dark mode toggle functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+        });
+
+        const endpoints= document.querySelectorAll('.end-point');
+
+
+        endpoints.forEach((el) => {
+            el.addEventListener('click',(e) => {
+                e.preventDefault()
+                document.querySelector("#endpoint").value = e.target.text
+            })
+           
+        })
+    </script>
+
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
+
